@@ -3,7 +3,7 @@ import { create } from "zustand";
 export const useStore = create((set) => ({
     database: [
         {
-            id: 1,
+            id: crypto.randomUUID(),
             name: "table_1",
             borderColor: "#FF6B6B",
             columns: [
@@ -17,6 +17,38 @@ export const useStore = create((set) => ({
             ]
         }
     ],
+
+    changeTableName : (tableId, name) => set((state) => ({
+        database: state.database.map((table) =>
+            table.id === tableId ? { ...table, name: name || `table_${state.database.length}` } : table
+        )
+    })),
+
+    changeColumnName : (tableId, colId, name) => set((state) => ({
+        database: state.database.map((table) =>
+            table.id === tableId
+                ? {
+                    ...table,
+                    columns: table.columns.map((col) =>
+                        col.id === colId ? { ...col, name: name } : col
+                    )
+                }
+                : table
+        )
+    })),
+
+    changeColumnType : (tableId, colId, type) => set((state) => ({
+        database: state.database.map((table) =>
+            table.id === tableId
+                ? {
+                    ...table,
+                    columns: table.columns.map((col) =>
+                        col.id === colId ? { ...col, type: type } : col
+                    )
+                }
+                : table
+        )
+    })),
 
 
     setColoumnKey: (tableId, colId, key) =>

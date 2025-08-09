@@ -16,7 +16,7 @@ const Sidebar = () => {
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
         addTable({
-            id: Date.now() + Math.floor(Math.random() * 1000),
+            id: crypto.randomUUID(),
             name: `table_${tables.length + 1}`,
             borderColor: randomColor,
             columns: [

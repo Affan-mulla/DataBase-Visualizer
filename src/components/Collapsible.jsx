@@ -13,6 +13,9 @@ function Collapsible({ id, borderColor, name }) {
   const deleteC = useStore((state) => state.deleteColumn);
   const setKey = useStore((state) => state.setColoumnKey);
   const setNull = useStore((state) => state.setColumnNull);
+  const changeCName = useStore((state) => state.changeColumnName);
+  const changeCType = useStore((state) => state.changeColumnType);
+  const changeTName = useStore((state) => state.changeTableName);
 
 
   
@@ -65,6 +68,10 @@ function Collapsible({ id, borderColor, name }) {
         <input
           className="font-semibold bg-transparent focus:outline-none text-gray-800 text-sm flex-1"
           defaultValue={name || "table_1"}
+          placeholder="Table Name"
+          onChange={(e) => {
+            changeTName(id, e.target.value);
+          }}
         />
         <div className="cursor-pointer text-gray-500 hover:text-red-600 transition-colors hover:bg-neutral-200 p-2 rounded" onClick={deleteTable}>
           <Trash
@@ -85,11 +92,17 @@ function Collapsible({ id, borderColor, name }) {
                 <input
                   className="w-1/3 bg-white focus:outline-none border border-gray-300 rounded px-2 h-full text-sm focus:ring-1 focus:ring-emerald-400"
                   defaultValue={col.name}
+                  onChange={(e) => {
+                    changeCName(id, col.id, e.target.value);
+                  }}
                 />
                 <input
                   className="w-1/3 bg-white focus:outline-none border border-gray-300 rounded px-2 h-full text-sm focus:ring-1 focus:ring-emerald-400"
                   defaultValue={col.type}
                   list="types"
+                  onChange={(e) => {
+                    changeCType(id, col.id, e.target.value);
+                  }}
                 />
                 <datalist id="types">
                   <option value="int" />
@@ -121,7 +134,7 @@ function Collapsible({ id, borderColor, name }) {
                       <div className="absolute right-0 top-full  w-40 bg-neutral-800 text-white shadow shadow-neutral-900  rounded p-2 ">
                         {
                           options.map((option, index) => (
-                            <button className="flex items-center justify-start gap-4 py-1 px-4 hover:bg-teal-500 w-full rounded font-semibold" onClick={() => setColoumnKey(col.id, option.value)}>
+                            <button key={index} className="flex items-center justify-start gap-4 py-1 px-4 hover:bg-teal-500 w-full rounded font-semibold" onClick={() => setColoumnKey(col.id, option.value)}>
 
                               <option.icon size={16} />
                               <span>{option.label}</span>
