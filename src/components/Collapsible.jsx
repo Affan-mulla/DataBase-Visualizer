@@ -1,13 +1,32 @@
-import { useState } from "react";
-import { Key, Trash, ArrowDown, ArrowUp } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Key, Trash, ArrowDown, ArrowUp, Star, CircleDot, Snowflake } from "lucide-react";
 import { useStore } from "../store/store";
 
 function Collapsible({ id, borderColor, name }) {
+
+  const [isOpen, setIsOpen] = useState(true);
+  const [openKeyMenu, setOpenKeyMenu] = useState(null);
+
   const columns = useStore((state) => state.database.find((table) => table.id === id).columns);
   const deleteT = useStore((state) => state.deleteTable);
-  const [isOpen, setIsOpen] = useState(true);
   const addC = useStore((state) => state.addColumn);
   const deleteC = useStore((state) => state.deleteColumn);
+  const setKey = useStore((state) => state.setColoumnKey);
+  const setNull = useStore((state) => state.setColumnNull);
+
+
+  
+
+  const options = [
+    { value: "none", label: "None", icon: CircleDot },
+    { value: "primary", label: "Primary", icon: Key },
+    { value: "unique", label: "Unique", icon: Snowflake }
+  ];
+
+  const toggleKeyMenu = (colId) => {
+    setOpenKeyMenu(openKeyMenu === colId ? null : colId);
+  };
+
 
   const addColumn = () => {
     addC(id, { id: crypto.randomUUID(), name: "new_column", type: "bigint", isPrimary: false, nullable: false });
@@ -21,9 +40,18 @@ function Collapsible({ id, borderColor, name }) {
     deleteT(id);
   }
 
+  const setColoumnKey = (colId, key) => {
+    setKey(id, colId, key);
+    toggleKeyMenu(null);
+  }
+
+  const setColumnNull = (colId, nullable) => {
+    setNull(id, colId, nullable);
+  }
+
   return (
     <div
-      className="w-full max-w-lg bg-white shadow-md overflow-hidden border-l-4"
+      className="w-full max-w-lg z-0 bg-white shadow-md border-l-4"
       style={{ borderLeftColor: `${borderColor}` }}
     >
       {/* Header */}
@@ -74,24 +102,52 @@ function Collapsible({ id, borderColor, name }) {
                   <option value="varchar" />
                 </datalist>
 
+                <div className="flex items-center h-full">
+                  <div className="relative h-full px-2 rounded hover:bg-gray-200 cursor-pointer flex items-center justify-center" onClick={() =>{
+                    toggleKeyMenu(col.id)
+                  }}>
+                    <button className="flex items-center justify-center h-full" >
+                      {
+                        col.key === "primary" 
+                        ? <Key size={16} className="text-emerald-400" /> 
+                        : col.key === "unique" 
+                        ? <Snowflake size={16} className="text-sky-400" /> 
+                        : <CircleDot size={16} />
+                        
+                      }
+                    </button>
 
-                <span className="text-green-600 h-full px-1 rounded hover:bg-gray-200 cursor-pointer flex items-center justify-center">
-                  <Key size={16} />
-                </span>
+                    {openKeyMenu === col.id && (
+                      <div className="absolute right-0 top-full  w-40 bg-neutral-800 text-white shadow shadow-neutral-900  rounded p-2 ">
+                        {
+                          options.map((option, index) => (
+                            <button className="flex items-center justify-start gap-4 py-1 px-4 hover:bg-teal-500 w-full rounded font-semibold" onClick={() => setColoumnKey(col.id, option.value)}>
+
+                              <option.icon size={16} />
+                              <span>{option.label}</span>
+                            </button>
+                          ))
+                        }
+
+                      </div>
+                    )}
+                  </div>
 
 
 
-                <span className="text-gray-600 hover:bg-gray-200 cursor-pointer rounded px-1 h-full flex items-center justify-center font-semibold">
-                  N
-                </span>
 
 
-                <span
-                  className="text-gray-600 hover:bg-gray-200 cursor-pointer rounded px-1 h-full hover:text-red-500 flex items-center justify-center"
-                  onClick={() => deleteColumn(col.id)}
-                >
-                  <Trash size={16} />
-                </span>
+                  <span className={`text-gray-600 hover:bg-gray-200 cursor-pointer rounded px-2 h-full flex items-center justify-center font-semibold ${col.nullable ? "text-red-500" : "text-gray-600"} `} onClick={() => setColumnNull(col.id, !col.nullable)}>
+                    N
+                  </span>
+
+                  <span
+                    className="text-gray-600 hover:bg-gray-200 cursor-pointer rounded px-2 h-full hover:text-red-500 flex items-center justify-center"
+                    onClick={() => deleteColumn(col.id)}
+                  >
+                    <Trash size={16} />
+                  </span>
+                </div>
               </div>
             ))}
           </div>

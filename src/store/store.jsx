@@ -11,12 +11,42 @@ export const useStore = create((set) => ({
                     id: 1,
                     name: "id",
                     type: "bigint",
-                    isPrimary: true,
+                    key: "primary",
                     nullable: false
                 }
             ]
         }
     ],
+
+
+    setColoumnKey: (tableId, colId, key) =>
+        set((state) => ({
+            database: state.database.map((table) =>
+                table.id === tableId
+                    ? {
+                        ...table,
+                        columns: table.columns.map((col) =>
+                            col.id === colId ? { ...col, key: key } : col
+                        )
+                    } :
+                    table
+
+            )
+        })),
+
+    setColumnNull: (tableId, colId, nullable) =>
+        set((state) => ({
+            database: state.database.map((table) =>
+                table.id === tableId
+                    ? {
+                        ...table,
+                        columns: table.columns.map((col) =>
+                            col.id === colId ? { ...col, nullable: nullable } : col
+                        )
+                    }
+                    : table
+            )
+        })),
 
     addTable: (table) =>
         set((state) => ({
