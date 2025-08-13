@@ -27,7 +27,9 @@ const Sidebar = () => {
                     isPrimary: true,
                     nullable: false
                 }
-            ]
+            ],
+            type : 'custom',
+            position : {x: 300 + Math.floor(Math.random() * 900) , y : Math.floor(Math.random() * 500)}
         })
        
     };

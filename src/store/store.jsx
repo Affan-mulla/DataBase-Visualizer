@@ -1,6 +1,7 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-export const useStore = create((set) => ({
+export const useStore = create(persist((set) => ({
     database: [
         {
             id: crypto.randomUUID(),
@@ -14,9 +15,17 @@ export const useStore = create((set) => ({
                     key: "primary",
                     nullable: false
                 }
-            ]
+            ],
+            type : "custom",
+            position: { x: 400 + Math.floor(Math.random() * 300), y: 200 + Math.floor(Math.random() * 300) },
         }
     ],
+
+    updateNodePosition: (node) => set((state) => ({
+        database : state.database.map((table) => 
+            table.id == node.id ? {...table, position : node.position} : table    
+        )
+    })),
 
     changeTableName : (tableId, name) => set((state) => ({
         database: state.database.map((table) =>
@@ -110,4 +119,4 @@ export const useStore = create((set) => ({
                     : table
             )
         }))
-}));
+})));
