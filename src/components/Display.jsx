@@ -1,5 +1,5 @@
-import { addEdge, Background, Controls, MiniMap, ReactFlow, useEdgesState, useNodesState } from '@xyflow/react'
-import { useCallback, useEffect, useMemo } from 'react'
+import { addEdge, Background, Controls, MiniMap, ReactFlow, reconnectEdge, useEdgesState, useNodesState } from '@xyflow/react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import '@xyflow/react/dist/style.css';
 import CustomNode from './CustomNode';
 import { useStore } from '../store/store.jsx';
@@ -9,6 +9,26 @@ const Display = () => {
 
   const database = useStore((state) => state.database);
   const updateNodePosition = useStore((state) => state.updateNodePosition);
+  const edgeReconnectSuccessful = useRef(true);
+
+  const onReconnectStart = useCallback(() => {
+    edgeReconnectSuccessful.current = false;
+  }, []);
+
+  const onReconnect = useCallback((oldEdge, newConnection) => {
+    edgeReconnectSuccessful.current = true;
+    setEdges((els) => reconnectEdge(oldEdge, newConnection, els));
+  }, []);
+
+  const onReconnectEnd = useCallback((_, edge) => {
+    if (!edgeReconnectSuccessful.current) {
+      setEdges((eds) => eds.filter((e) => e.id !== edge.id));
+    }
+
+    edgeReconnectSuccessful.current = true;
+  }, []);
+
+
 
   const initialNodes = useMemo(() =>
     database.map((table) => ({
@@ -35,9 +55,17 @@ const Display = () => {
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialedges);
+  // const [colorMode, setColorMode] = useState('dark');
 
-  const onConnect = useCallback((nodeParams) =>
-    setEdges((eds) => addEdge(nodeParams, eds))
+  const onConnect = useCallback((nodeParams) => {
+    console.log(nodeParams);
+
+    setEdges((eds) => {
+      console.log(eds);
+
+      return addEdge({ ...nodeParams, type: 'custom' }, eds)
+    })
+  }
     , []);
 
   useEffect(() => {
@@ -63,7 +91,7 @@ const Display = () => {
             id: table.id,
             type: 'custom',
             data: newData,
-            position : table.position
+            position: table.position
           });
         }
       }
@@ -74,11 +102,11 @@ const Display = () => {
   }, [database]);
 
   const NodesUpdate = (e) => {
-    if(e[0].dragging === false) {
+    if (e[0].dragging === false) {
       updateNodePosition(e[0]);
     }
     onNodesChange(e)
-  } 
+  }
 
   return (
     <div className="h-screen w-full relative">
@@ -90,6 +118,11 @@ const Display = () => {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         edgeTypes={edgeTypes}
+        snapToGrid
+        onReconnect={onReconnect}
+        onReconnectStart={onReconnectStart}
+        onReconnectEnd={onReconnectEnd}
+      // colorMode={colorMode}
 
       >
         <Background />
