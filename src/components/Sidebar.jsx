@@ -6,7 +6,7 @@ const Sidebar = () => {
 
     const tables = useStore((state) => state.database);
     const addTable = useStore((state) => state.addTable);
-    
+
     const addNewTable = () => {
         const colors = [
             "#FF6B6B", "#FFD93D", "#6BCB77", "#4D96FF",
@@ -33,32 +33,32 @@ const Sidebar = () => {
 
     };
 
-   
+
 
     return (
 
-            <div className="w-[350px] h-screen max-h-screen flex flex-col shadow-xl rounded-lg overflow-hidden bg-white">
-                <div className="flex justify-between items-center p-4 border-b border-neutral-200 shadow-sm sticky top-0 bg-white z-50">
-                    <h1 className="text-2xl font-semibold text-neutral-700">Tables</h1>
-                    <button
-                        onClick={addNewTable}
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-[7px] rounded transition-colors"
-                    >
-                        + New table
-                    </button>
-                </div>
-
-                <div className="flex-1 overflow-y-auto">
-                    {tables.map((table) => (
-                        <Collapsible
-                            id={table.id}
-                            key={table.id}
-                            name={table.name}
-                            borderColor={table.borderColor}
-                        />
-                    ))}
-                </div>
+        <div className="w-[350px] h-screen max-h-screen flex flex-col shadow-xl overflow-hidden bg-white dark:bg-slate-800">
+            <div className="flex justify-between items-center p-4 border-b border-neutral-200 shadow-sm sticky top-0 bg-white  dark:bg-slate-800 z-50">
+                <h1 className="text-2xl font-semibold text-neutral-700 dark:text-white">Tables</h1>
+                <button
+                    onClick={addNewTable}
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-[7px] rounded transition-colors"
+                >
+                    + New table
+                </button>
             </div>
+
+            <div className="flex-1 overflow-y-auto">
+                {tables.map((table) => (
+                    <Collapsible
+                        id={table.id}
+                        key={table.id}
+                        name={table.name}
+                        borderColor={table.borderColor}
+                    />
+                ))}
+            </div>
+        </div>
 
     )
 }

@@ -114,7 +114,7 @@ const Display = () => {
   }
 
   return (
-    <div className="h-screen w-full relative">
+    <div className="h-screen w-full relative dark:bg-neutral-800">
       <ReactFlow
         onNodesChange={NodesUpdate}
         nodes={nodes}
@@ -128,6 +128,7 @@ const Display = () => {
         onReconnectStart={onReconnectStart}
         onReconnectEnd={onReconnectEnd}
       // colorMode={colorMode}
+      connectionRadius={40}
       
 
       >
