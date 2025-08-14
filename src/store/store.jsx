@@ -16,24 +16,34 @@ export const useStore = create(persist((set) => ({
                     nullable: false
                 }
             ],
-            type : "custom",
+            type: "custom",
             position: { x: 400 + Math.floor(Math.random() * 300), y: 200 + Math.floor(Math.random() * 300) },
         }
     ],
+    edges: [],
+    setEdges: (edges) => set({ edges }),
+
+    addEdges: (edge) => set((state) => ({
+        edges: [...state.edges, edge]
+    })),
+
+    deleteEdge : (edgeId) => set((state) => ({
+        edges: state.edges.filter((e) => e.id !== edgeId)
+    })),
 
     updateNodePosition: (node) => set((state) => ({
-        database : state.database.map((table) => 
-            table.id == node.id ? {...table, position : node.position} : table    
+        database: state.database.map((table) =>
+            table.id == node.id ? { ...table, position: node.position } : table
         )
     })),
 
-    changeTableName : (tableId, name) => set((state) => ({
+    changeTableName: (tableId, name) => set((state) => ({
         database: state.database.map((table) =>
             table.id === tableId ? { ...table, name: name || `table_${state.database.length}` } : table
         )
     })),
 
-    changeColumnName : (tableId, colId, name) => set((state) => ({
+    changeColumnName: (tableId, colId, name) => set((state) => ({
         database: state.database.map((table) =>
             table.id === tableId
                 ? {
@@ -46,7 +56,7 @@ export const useStore = create(persist((set) => ({
         )
     })),
 
-    changeColumnType : (tableId, colId, type) => set((state) => ({
+    changeColumnType: (tableId, colId, type) => set((state) => ({
         database: state.database.map((table) =>
             table.id === tableId
                 ? {
