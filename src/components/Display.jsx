@@ -10,27 +10,21 @@ const Display = () => {
   const database = useStore((state) => state.database);
   const updateNodePosition = useStore((state) => state.updateNodePosition);
   const edgeReconnectSuccessful = useRef(true);
-  const updateEdges = useStore((state) => state.updateEdge);
   const addEdges = useStore((state) => state.addEdges);
   const storeEdges = useStore((state) => state.edges);
   const deleteEdge = useStore((state) => state.deleteEdge);
 
 
-  const onReconnectStart = useCallback(() => {
-    console.log('edgeReconnectSuccessful Start', edgeReconnectSuccessful.current);
-    
+  const onReconnectStart = useCallback(() => {  
     edgeReconnectSuccessful.current = false;
   }, []);
 
   const onReconnect = useCallback((oldEdge, newConnection) => {
-    console.log('edgeReconnectSuccessful current', edgeReconnectSuccessful.current);
     edgeReconnectSuccessful.current = true;
     setEdges((els) => reconnectEdge(oldEdge, newConnection, els));
   }, []);
 
   const onReconnectEnd = useCallback((_, edge) => {
-    console.log('edgeReconnectSuccessful End', edgeReconnectSuccessful.current);
-    
     if (!edgeReconnectSuccessful.current) {
       deleteEdge(edge.id);
       setEdges((eds) => eds.filter((e) => e.id !== edge.id));
