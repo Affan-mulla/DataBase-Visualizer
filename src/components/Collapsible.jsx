@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Key, Trash, ArrowDown, ArrowUp, Star, CircleDot, Snowflake } from "lucide-react";
 import { useStore } from "../store/store";
+import { dbDataTypes } from "../data/dataTypes";
 
 function Collapsible({ id, borderColor, name }) {
 
@@ -94,16 +95,12 @@ function Collapsible({ id, borderColor, name }) {
                   onChange={(e) => changeCType(id, col.id, e.target.value)}
                 />
                 <datalist id="types">
-                  <option value="int" />
-                  <option value="bigint" />
-                  <option value="text" />
-                  <option value="date" />
-                  <option value="boolean" />
-                  <option value="float" />
-                  <option value="double" />
-                  <option value="varchar" />
+                {
+                  dbDataTypes.map((type, i) => (
+                    <option key={i} value={type}>{type}</option>
+                  ))
+                }
                 </datalist>
-
                 <div className="flex items-center h-full">
                   <div
                     className="relative h-full px-2 rounded hover:bg-neutral-200 dark:hover:bg-neutral-700 cursor-pointer flex items-center justify-center"
