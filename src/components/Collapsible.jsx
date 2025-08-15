@@ -4,7 +4,7 @@ import { useStore } from "../store/store";
 
 function Collapsible({ id, borderColor, name }) {
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [openKeyMenu, setOpenKeyMenu] = useState(null);
 
   const columns = useStore((state) => state.database.find((table) => table.id === id).columns);

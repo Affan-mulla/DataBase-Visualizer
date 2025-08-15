@@ -23,7 +23,7 @@ function CustomNode({ data }) {
             <Handle
               type="target"
               position={Position.Left}
-              id={`${data.tableName}-${col.name}-in`}
+              id={`in-${data.id}-${col.id}`}
               style={{
                 top: "50%",
                 height: "25%",
@@ -53,7 +53,7 @@ function CustomNode({ data }) {
             <Handle
               type="source"
               position={Position.Right}
-              id={`${data.tableName}-${col.name}-out`}
+               id={`out-${data.id}-${col.id}`}
               style={{
                 top: "50%",
                 height: "25%",
