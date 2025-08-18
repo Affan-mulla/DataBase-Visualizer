@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import { Key, Trash, ArrowDown, ArrowUp, Star, CircleDot, Snowflake } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Key, Trash, ArrowDown, ArrowUp, Star, CircleDot, Snowflake, LogIn } from "lucide-react";
 import { useStore } from "../store/store";
 import { dbDataTypes } from "../data/dataTypes";
+import GetColumns from "../hooks/GetColumns";
 
-function Collapsible({ id, borderColor, name }) {
+function Collapsible({ id, borderColor, name, diagramId }) {
 
   const [isOpen, setIsOpen] = useState(false);
   const [openKeyMenu, setOpenKeyMenu] = useState(null);
 
-  const columns = useStore((state) => state.database.find((table) => table.id === id).columns);
+  const columns = GetColumns(diagramId, id)  
+  
   const deleteT = useStore((state) => state.deleteTable);
   const addC = useStore((state) => state.addColumn);
   const deleteC = useStore((state) => state.deleteColumn);
@@ -17,9 +19,6 @@ function Collapsible({ id, borderColor, name }) {
   const changeCName = useStore((state) => state.changeColumnName);
   const changeCType = useStore((state) => state.changeColumnType);
   const changeTName = useStore((state) => state.changeTableName);
-
-
-
 
   const options = [
     { value: "none", label: "None", icon: CircleDot },
@@ -33,24 +32,12 @@ function Collapsible({ id, borderColor, name }) {
 
 
   const addColumn = () => {
-    addC(id, { id: crypto.randomUUID(), name: "new_column", type: "bigint", isPrimary: false, nullable: false });
+    addC(id, { id: crypto.randomUUID(), name: "new_column", type: "bigint", isPrimary: false, nullable: false }, diagramId);
   };
-
-  const deleteColumn = (colId) => {
-    deleteC(id, colId);
-  };
-
-  const deleteTable = () => {
-    deleteT(id);
-  }
 
   const setColoumnKey = (colId, key) => {
-    setKey(id, colId, key);
+    setKey(id, colId, key,diagramId);
     toggleKeyMenu(null);
-  }
-
-  const setColumnNull = (colId, nullable) => {
-    setNull(id, colId, nullable);
   }
 
   return (
@@ -69,9 +56,9 @@ function Collapsible({ id, borderColor, name }) {
           className="font-semibold bg-transparent focus:outline-none text-neutral-800 dark:text-neutral-200 text-sm flex-1"
           defaultValue={name || "table_1"}
           placeholder="Table Name"
-          onChange={(e) => changeTName(id, e.target.value)}
+          onChange={(e) => changeTName(id, e.target.value,diagramId)}
         />
-        <div className="cursor-pointer text-neutral-500 dark:text-neutral-400 hover:text-red-500 transition-colors hover:bg-neutral-200 dark:hover:bg-neutral-700 p-2 rounded" onClick={deleteTable}>
+        <div className="cursor-pointer text-neutral-500 dark:text-neutral-400 hover:text-red-500 transition-colors hover:bg-neutral-200 dark:hover:bg-neutral-700 p-2 rounded" onClick={()=> deleteT(id,diagramId)}>
           <Trash size={16} />
         </div>
       </div>
@@ -86,13 +73,13 @@ function Collapsible({ id, borderColor, name }) {
                 <input
                   className="w-1/3 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 focus:outline-none border border-neutral-300 dark:border-neutral-600 rounded px-2 h-full text-sm focus:ring-1 focus:ring-emerald-400"
                   defaultValue={col.name}
-                  onChange={(e) => changeCName(id, col.id, e.target.value)}
+                  onChange={(e) => changeCName(id, col.id, e.target.value,diagramId)}
                 />
                 <input
                   className="w-1/3 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 focus:outline-none border border-neutral-300 dark:border-neutral-600 rounded px-2 h-full text-sm focus:ring-1 focus:ring-emerald-400"
                   defaultValue={col.type}
                   list="types"
-                  onChange={(e) => changeCType(id, col.id, e.target.value)}
+                  onChange={(e) => changeCType(id, col.id, e.target.value, diagramId)}
                 />
                 <datalist id="types">
                 {
@@ -120,7 +107,7 @@ function Collapsible({ id, borderColor, name }) {
                           <button
                             key={index}
                             className="flex items-center justify-start gap-4 py-1 px-4 hover:bg-teal-500 w-full rounded font-semibold"
-                            onClick={() => setColoumnKey(col.id, option.value)}
+                            onClick={() => setColoumnKey(col.id, option.value,diagramId)}
                           >
                             <option.icon size={16} />
                             <span>{option.label}</span>
@@ -132,14 +119,14 @@ function Collapsible({ id, borderColor, name }) {
 
                   <span
                     className={`hover:bg-neutral-200 dark:hover:bg-neutral-700 cursor-pointer rounded px-2 h-full flex items-center justify-center font-semibold ${col.nullable ? "text-red-500" : "text-neutral-600 dark:text-neutral-300"}`}
-                    onClick={() => setColumnNull(col.id, !col.nullable)}
+                    onClick={() => setNull(id, col.id, nullable,diagramId)}
                   >
                     N
                   </span>
 
                   <span
                     className="hover:bg-neutral-200 dark:hover:bg-neutral-700 cursor-pointer rounded px-2 h-full hover:text-red-500 flex items-center justify-center dark:text-neutral-300 text-neutral-500"
-                    onClick={() => deleteColumn(col.id)}
+                    onClick={() => deleteC(id, col.id, diagramId)}
                   >
                     <Trash size={16} />
                   </span>

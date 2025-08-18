@@ -4,129 +4,238 @@ import { persist } from "zustand/middleware";
 export const useStore = create(persist((set) => ({
     database: [
         {
-            id: crypto.randomUUID(),
-            name: "table_1",
-            borderColor: "#FF6B6B",
-            columns: [
-                {
-                    id: 1,
-                    name: "id",
-                    type: "bigint",
-                    key: "primary",
-                    nullable: false
-                }
-            ],
-            type: "custom",
-            position: { x: 400 + Math.floor(Math.random() * 300), y: 200 + Math.floor(Math.random() * 300) },
+            id: Date.now(),
+            diagram_name: "Diagram_1",
+            diagram_data: [{
+                id: crypto.randomUUID(),
+                name: "table_1",
+                borderColor: "#FF6B6B",
+                columns: [
+                    {
+                        id: 1,
+                        name: "id",
+                        type: "bigint",
+                        key: "primary",
+                        nullable: false
+                    }
+                ],
+                type: "custom",
+                position: { x: 400 + Math.floor(Math.random() * 300), y: 200 + Math.floor(Math.random() * 300) },
+            }],
+            edges: []
         }
     ],
-    edges: [],
-    setEdges: (edges) => set({ edges }),
 
-    addEdges: (edge) => set((state) => ({
-        edges: [...state.edges, edge]
+    createDiagram: () => set((state) => ({
+        database: [...state.database, {
+
+            id: Date.now(),
+            diagram_name: "Diagram_1",
+            diagram_data: [{
+                id: crypto.randomUUID(),
+                name: "table_1",
+                borderColor: "#FF6B6B",
+                columns: [
+                    {
+                        id: 1,
+                        name: "id",
+                        type: "bigint",
+                        key: "primary",
+                        nullable: false
+                    }
+                ],
+                type: "custom",
+                position: { x: 400 + Math.floor(Math.random() * 300), y: 200 + Math.floor(Math.random() * 300) },
+            }],
+            edges: []
+
+        }]
     })),
 
-    deleteEdge : (edgeId) => set((state) => ({
+    deleteDiagram: (DiagramId) => set((state) => ({
+        database: state.database.filter((database) => DiagramId != database.id)
+    })),
+
+    setEdges: (edges, diagramId) => set((state) => ({
+        database: state.database.map((diagram) =>
+            diagram.id === diagramId ? {
+                ...diagram,
+                edges: edges
+            } : diagram
+        )
+    })),
+
+    addEdges: (edge, diagramId) => set((state) => ({
+        database: state.database.map((diagram) =>
+            diagram.id === diagramId ? {
+                ...diagram,
+                edges: [...diagram.edges, edge]
+            } : diagram
+        )
+    })),
+
+    deleteEdge: (edgeId) => set((state) => ({
         edges: state.edges.filter((e) => e.id !== edgeId)
     })),
 
-    updateNodePosition: (node) => set((state) => ({
-        database: state.database.map((table) =>
-            table.id == node.id ? { ...table, position: node.position } : table
-        )
-    })),
-
-    changeTableName: (tableId, name) => set((state) => ({
-        database: state.database.map((table) =>
-            table.id === tableId ? { ...table, name: name || `table_${state.database.length}` } : table
-        )
-    })),
-
-    changeColumnName: (tableId, colId, name) => set((state) => ({
-        database: state.database.map((table) =>
-            table.id === tableId
+    updateNodePosition: (node, diagramId) => set((state) => ({
+        database: state.database.map((diagram) =>
+            diagram.id === diagramId
                 ? {
-                    ...table,
-                    columns: table.columns.map((col) =>
-                        col.id === colId ? { ...col, name: name } : col
+                    ...diagram,
+                    diagram_data: diagram.diagram_data.map((table) =>
+                        table.id === node.id ? { ...table, position: node.position } : table
                     )
                 }
-                : table
+                : diagram
         )
     })),
 
-    changeColumnType: (tableId, colId, type) => set((state) => ({
-        database: state.database.map((table) =>
-            table.id === tableId
+    changeTableName: (tableId, name, diagramId) => set((state) => ({
+        database: state.database.map((diagram) =>
+            diagram.id === diagramId
                 ? {
-                    ...table,
-                    columns: table.columns.map((col) =>
-                        col.id === colId ? { ...col, type: type } : col
+                    ...diagram,
+                    diagram_data: diagram.diagram_data.map((table) =>
+                        table.id === tableId ? { ...table, name: name } : table
                     )
                 }
-                : table
+                : diagram
+        )
+    })),
+
+    changeColumnName: (tableId, colId, name, diagramId) => set((state) => ({
+        database: state.database.map((diagram) =>
+            diagram.id === diagramId
+                ? {
+                    ...diagram,
+                    diagram_data: diagram.diagram_data.map((table) =>
+                        table.id === tableId
+                            ? {
+                                ...table,
+                                columns: table.columns.map((col) =>
+                                    col.id === colId ? { ...col, name: name } : col
+                                )
+                            }
+                            : table
+                    )
+                }
+                : diagram
+        )
+    })),
+
+    changeColumnType: (tableId, colId, type, diagramId) => set((state) => ({
+        database: state.database.map((diagram) =>
+            diagram.id === diagramId ?
+                {
+                    ...diagram,
+                    diagram_data: diagram.diagram_data.map((table) =>
+                        table.id === tableId
+                            ? {
+                                ...table,
+                                columns: table.columns.map((col) =>
+                                    col.id === colId ? { ...col, type: type } : col
+                                )
+                            }
+                            : table
+                    )
+                }
+                : diagram
         )
     })),
 
 
-    setColoumnKey: (tableId, colId, key) =>
+    setColoumnKey: (tableId, colId, key, diagramId) =>
         set((state) => ({
-            database: state.database.map((table) =>
-                table.id === tableId
-                    ? {
-                        ...table,
-                        columns: table.columns.map((col) =>
-                            col.id === colId ? { ...col, key: key } : col
-                        )
-                    } :
-                    table
-
-            )
-        })),
-
-    setColumnNull: (tableId, colId, nullable) =>
-        set((state) => ({
-            database: state.database.map((table) =>
-                table.id === tableId
-                    ? {
-                        ...table,
-                        columns: table.columns.map((col) =>
-                            col.id === colId ? { ...col, nullable: nullable } : col
+            database: state.database.map((diagram) =>
+                diagram.id === diagramId ?
+                    {
+                        ...diagram,
+                        diagram_data: diagram.diagram_data.map((table) =>
+                            table.id === tableId
+                                ? {
+                                    ...table,
+                                    columns: table.columns.map((col) =>
+                                        col.id === colId ? { ...col, key: key } : col
+                                    )
+                                }
+                                : table
                         )
                     }
-                    : table
+                    : diagram
             )
         })),
 
-    addTable: (table) =>
+    setColumnNull: (tableId, colId, nullable, diagramId) =>
         set((state) => ({
-            database: [...state.database, table]
-        })),
-
-    deleteTable: (id) =>
-        set((state) => ({
-            database: state.database.filter((table) => table.id !== id)
-        })),
-
-    addColumn: (tableId, column) =>
-        set((state) => ({
-            database: state.database.map((table) =>
-                table.id === tableId
-                    ? { ...table, columns: [...table.columns, column] }
-                    : table
-            )
-        })),
-
-    deleteColumn: (tableId, colId) =>
-        set((state) => ({
-            database: state.database.map((table) =>
-                table.id === tableId
-                    ? {
-                        ...table,
-                        columns: table.columns.filter((col) => col.id !== colId)
+            database: state.database.map((diagram) =>
+                diagram.id === diagramId ?
+                    {
+                        ...diagram,
+                        diagram_data: diagram.diagram_data.map((table) =>
+                            table.id === tableId
+                                ? {
+                                    ...table,
+                                    columns: table.columns.map((col) =>
+                                        col.id === colId ? { ...col, nullable: nullable } : col
+                                    )
+                                }
+                                : table
+                        )
                     }
-                    : table
+                    : diagram
+            )
+        })),
+
+    addTable: (table, diagramId) =>
+        set((state) => ({
+            database: state.database.map((diagram) =>
+                diagram.id === diagramId ?
+                    {
+                        ...diagram,
+                        diagram_data: [...diagram.diagram_data, table]
+                    }
+                    : diagram
+            )
+        })),
+
+    deleteTable: (id, diagramId) =>
+        set((state) => ({
+            database: state.database.map((diagram) =>
+                diagram.id === diagramId ?
+                    {
+                        ...diagram,
+                        diagram_data: diagram.diagram_data.filter((table) => table.id !== id)
+                    }
+                    : diagram
+            )
+        })),
+
+    addColumn: (tableId, column, diagramId) =>
+        set((state) => ({
+            database: state.database.map((diagram) =>
+                diagram.id === diagramId ?
+                    {
+                        ...diagram,
+                        diagram_data: diagram.diagram_data.map((table) =>
+                            table.id === tableId ? { ...table, columns: [...table.columns, column] } : table
+                        )
+                    }
+                    : diagram
+            )
+        })),
+
+    deleteColumn: (tableId, colId, diagramId) =>
+        set((state) => ({
+            database: state.database.map((diagram) =>
+                diagram.id === diagramId ?
+                    {
+                        ...diagram,
+                        diagram_data: diagram.diagram_data.map((table) =>
+                            table.id === tableId ? { ...table, columns: table.columns.filter((col) => col.id !== colId) } : table
+                        )
+                    }
+                    : diagram
             )
         }))
 })));

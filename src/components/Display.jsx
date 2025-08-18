@@ -4,14 +4,15 @@ import '@xyflow/react/dist/style.css';
 import CustomNode from './CustomNode';
 import { useStore } from '../store/store.jsx';
 import CustomEdge from './CustomEdge.jsx';
+import GetDiagram from '../hooks/GetDiagram.js';
 
-const Display = () => {
+const Display = ({diagramId}) => {
 
-  const database = useStore((state) => state.database);
+  const database = GetDiagram(diagramId)
   const updateNodePosition = useStore((state) => state.updateNodePosition);
   const edgeReconnectSuccessful = useRef(true);
   const addEdges = useStore((state) => state.addEdges);
-  const storeEdges = useStore((state) => state.edges);
+  const storeEdges = database.edges
   const deleteEdge = useStore((state) => state.deleteEdge);
 
 
@@ -36,7 +37,7 @@ const Display = () => {
 
 
   const initialNodes = useMemo(() =>
-    database.map((table) => ({
+    database.diagram_data.map((table) => ({
       id: table.id,
       type: 'custom',
       data: {
@@ -64,7 +65,7 @@ const Display = () => {
 
   const onConnect = useCallback((nodeParams) => {
     const newEdge = addEdge({ ...nodeParams, type: 'custom' }, edges)
-    addEdges(newEdge[newEdge.length - 1])
+    addEdges(newEdge[newEdge.length - 1], diagramId)
     setEdges((eds) => {
       return addEdge({ ...nodeParams, type: 'custom' }, eds)
     })
@@ -77,7 +78,7 @@ const Display = () => {
     setNodes((prevNodes) => {
       const updatedNodes = [];
 
-      for (const table of database) {
+      for (const table of database.diagram_data) {
         const existingNode = prevNodes.find((node) => node.id === table.id);
 
         const newData = {
@@ -108,7 +109,7 @@ const Display = () => {
 
   const NodesUpdate = (e) => {
     if (e[0].dragging === false) {
-      updateNodePosition(e[0]);
+      updateNodePosition(e[0],diagramId);
     }
     onNodesChange(e)
   }

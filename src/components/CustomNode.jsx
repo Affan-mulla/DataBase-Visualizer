@@ -2,6 +2,7 @@ import { Handle, Position } from "@xyflow/react";
 import { Key, Snowflake } from "lucide-react";
 
 function CustomNode({ data }) {
+  
   return (
     <div
       className="w-[300px] bg-white  dark:bg-neutral-900 shadow rounded-lg border-t-4 flex flex-col overflow-hidden"

@@ -1,13 +1,15 @@
 import Collapsible from './Collapsible'
 import { useStore } from '../store/store';
+import { useParams } from 'react-router-dom';
 
 
-const Sidebar = () => {
-
-    const tables = useStore((state) => state.database);
+const Sidebar = ({diagramId}) => {
+    const tables = useStore((state) => state.database.find((diagram) => diagram.id == diagramId).diagram_data);
     const addTable = useStore((state) => state.addTable);
+   
 
     const addNewTable = () => {
+        
         const colors = [
             "#FF6B6B", "#FFD93D", "#6BCB77", "#4D96FF",
             "#FF6FD8", "#6A67CE", "#F65A83", "#00C49A",
@@ -29,7 +31,7 @@ const Sidebar = () => {
             ],
             type: 'custom',
             position: { x: 300 + Math.floor(Math.random() * 900), y: Math.floor(Math.random() * 500) }
-        })
+        }, diagramId);
 
     };
 
@@ -55,6 +57,7 @@ const Sidebar = () => {
                         key={table.id}
                         name={table.name}
                         borderColor={table.borderColor}
+                        diagramId={diagramId}
                     />
                 ))}
             </div>
