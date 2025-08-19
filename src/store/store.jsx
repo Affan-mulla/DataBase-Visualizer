@@ -26,11 +26,11 @@ export const useStore = create(persist((set) => ({
         }
     ],
 
-    createDiagram: () => set((state) => ({
+    createDiagram: (diagramName) => set((state) => ({
         database: [...state.database, {
 
             id: Date.now(),
-            diagram_name: "Diagram_1",
+            diagram_name: diagramName || "Diagram_"+state.database.length,
             diagram_data: [{
                 id: crypto.randomUUID(),
                 name: "table_1",
