@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useStore } from '../store/store'
+import { Editor } from '@monaco-editor/react'
 
 const Schema = () => {
     const id = useParams().id
@@ -17,19 +18,28 @@ const Schema = () => {
             const cols = table.columns.map(col => {
                 let def = `${col.name} ${col.type}`;
                 if (col.key) def += col.key === "primary" ? " PRIMARY KEY" : " UNIQUE";
-                //   if (col.foreignKey) def += ` REFERENCES ${col.foreignKey}`;
+                if (col.foreignKey) def += ` REFERENCES ${col.foreignKey}`;
                 return def;
             });
+            
             return `CREATE TABLE ${table.name} (\n  ${cols.join(",\n  ")}\n);`;
         }).join("\n\n");
     }
 
-    
+
     return (
-        <div>
-            <pre>
-            <code>{schema}</code>
-            </pre>
+        <div className="h-screen  overflow-hidden">
+            <Editor
+                height="100%"
+                defaultLanguage="sql"
+                value={schema}
+                theme="vs-dark"
+                options={{
+                    fontSize: 14,
+                    minimap: { enabled: false },
+                    wordWrap: "on"
+                }}
+            />
         </div>
     )
 }
