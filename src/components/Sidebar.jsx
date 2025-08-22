@@ -24,7 +24,7 @@ const Sidebar = ({diagramId}) => {
                 {
                     id: 1,
                     name: "id",
-                    type: "bigint",
+                    type: "BIGINT",
                     isPrimary: true,
                     nullable: false
                 }
