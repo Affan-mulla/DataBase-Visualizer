@@ -1,5 +1,5 @@
-import { addEdge, Background, Controls, MiniMap, ReactFlow, reconnectEdge, useEdgesState, useNodesState } from '@xyflow/react'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { addEdge, Background, Controls, ReactFlow, reconnectEdge, useEdgesState, useNodesState } from '@xyflow/react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import '@xyflow/react/dist/style.css';
 import CustomNode from './CustomNode';
 import { useStore } from '../store/store.jsx';
@@ -13,7 +13,7 @@ const Display = ({diagramId}) => {
   const edgeReconnectSuccessful = useRef(true);
   const addEdges = useStore((state) => state.addEdges);
   const storeEdges = database.edges
-  const deleteEdge = useStore((state) => state.deleteEdge);
+  const updateEdges = useStore((state) => state.updateEdges);
 
 
   const onReconnectStart = useCallback(() => {  
@@ -23,11 +23,12 @@ const Display = ({diagramId}) => {
   const onReconnect = useCallback((oldEdge, newConnection) => {
     edgeReconnectSuccessful.current = true;
     setEdges((els) => reconnectEdge(oldEdge, newConnection, els));
+    updateEdges(reconnectEdge(oldEdge, newConnection, storeEdges), diagramId);
   }, []);
 
   const onReconnectEnd = useCallback((_, edge) => {
+    
     if (!edgeReconnectSuccessful.current) {
-      deleteEdge(edge.id);
       setEdges((eds) => eds.filter((e) => e.id !== edge.id));
     }
 
@@ -41,6 +42,7 @@ const Display = ({diagramId}) => {
       id: table.id,
       type: 'custom',
       data: {
+        id : table.id,
         tableName: table.name,
         borderColor: table.borderColor,
         columns: table.columns
@@ -61,10 +63,10 @@ const Display = ({diagramId}) => {
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialedges);
-  // const [colorMode, setColorMode] = useState('dark');
 
   const onConnect = useCallback((nodeParams) => {
     const newEdge = addEdge({ ...nodeParams, type: 'custom' }, edges)
+    
     addEdges(newEdge[newEdge.length - 1], diagramId)
     setEdges((eds) => {
       return addEdge({ ...nodeParams, type: 'custom' }, eds)
@@ -82,6 +84,7 @@ const Display = ({diagramId}) => {
         const existingNode = prevNodes.find((node) => node.id === table.id);
 
         const newData = {
+          id : table.id,
           tableName: table.name,
           borderColor: table.borderColor,
           columns: table.columns,

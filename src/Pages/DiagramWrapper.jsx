@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Sidebar from '../components/Sidebar';
 import Display from '../components/Display';
 import DarkModeToggle from '../components/DarkModeToggle';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const DiagramWrapper = () => {
     const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -31,6 +31,7 @@ const DiagramWrapper = () => {
             </div>
       </div>
       <Display diagramId={diagramId}  />
+      <Link to={`/schema/${diagramId}`} className=' absolute bg-blue-500 z-50 right-2 top-2 p-2 rounded hover:bg-blue-500/80  text-white'>Generate Schema</Link>
     </div>
   )
 }

@@ -40,6 +40,15 @@ function Collapsible({ id, borderColor, name, diagramId }) {
     toggleKeyMenu(null);
   }
 
+  const removeSpace = (name) => {
+    const newName = name.split("").map((e) => {
+      if (e === " ") {
+        return "_"
+      } else return e
+    }).join("")
+    return newName;
+  }
+
   return (
     <div
       className="w-full max-w-lg z-0 bg-white dark:bg-neutral-800 shadow-md border-l-4"
@@ -56,7 +65,7 @@ function Collapsible({ id, borderColor, name, diagramId }) {
           className="font-semibold bg-transparent focus:outline-none text-neutral-800 dark:text-neutral-200 text-sm flex-1"
           defaultValue={name || "table_1"}
           placeholder="Table Name"
-          onChange={(e) => changeTName(id, e.target.value,diagramId)}
+          onChange={(e) => changeTName(id, removeSpace(e.target.value),diagramId)}
         />
         <div className="cursor-pointer text-neutral-500 dark:text-neutral-400 hover:text-red-500 transition-colors hover:bg-neutral-200 dark:hover:bg-neutral-700 p-2 rounded" onClick={()=> deleteT(id,diagramId)}>
           <Trash size={16} />
@@ -73,7 +82,7 @@ function Collapsible({ id, borderColor, name, diagramId }) {
                 <input
                   className="w-1/3 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 focus:outline-none border border-neutral-300 dark:border-neutral-600 rounded px-2 h-full text-sm focus:ring-1 focus:ring-emerald-400"
                   defaultValue={col.name}
-                  onChange={(e) => changeCName(id, col.id, e.target.value,diagramId)}
+                  onChange={(e) => changeCName(id, col.id, removeSpace(e.target.value),diagramId)}
                 />
                 <input
                   className="w-1/3 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 focus:outline-none border border-neutral-300 dark:border-neutral-600 rounded px-2 h-full text-sm focus:ring-1 focus:ring-emerald-400"

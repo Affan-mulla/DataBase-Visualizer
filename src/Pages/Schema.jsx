@@ -18,7 +18,7 @@ const Schema = () => {
             const cols = table.columns.map(col => {
                 let def = `${col.name} ${col.type}`;
                 if (col.key) def += col.key === "primary" ? " PRIMARY KEY" : " UNIQUE";
-                if (col.foreignKey) def += ` REFERENCES ${col.foreignKey}`;
+                // if (col.foreignKey) def += ` REFERENCES ${col.foreignKey}`;
                 return def;
             });
             

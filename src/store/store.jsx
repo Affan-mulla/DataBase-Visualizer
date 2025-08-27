@@ -74,8 +74,13 @@ export const useStore = create(persist((set) => ({
         )
     })),
 
-    deleteEdge: (edgeId) => set((state) => ({
-        edges: state.edges.filter((e) => e.id !== edgeId)
+    updateEdges: (newEdges, diagramId) => set((state) => ({
+        database: state.database.map((diagram) =>
+            diagram.id === diagramId ? {
+                ...diagram,
+                edges: newEdges
+            } : diagram
+        )
     })),
 
     updateNodePosition: (node, diagramId) => set((state) => ({
