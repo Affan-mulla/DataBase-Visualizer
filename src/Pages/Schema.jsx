@@ -18,15 +18,18 @@ const Schema = () => {
             const cols = table.columns.map(col => {
                 let def = `${col.name} ${col.type}`;
                 if (col.key) def += col.key === "primary" ? " PRIMARY KEY" : " UNIQUE";
-                // if (col.foreignKey) def += ` REFERENCES ${col.foreignKey}`;
+                console.log(table.foreignKeys);
+                if (col.nullable) def += " NOT NULL";
                 return def;
             });
-            
-            return `CREATE TABLE ${table.name} (\n  ${cols.join(",\n  ")}\n);`;
+            const fks = table.foreignKeys.map(fk => {
+                return `\n  FOREIGN KEY (${fk.foreignCol}) REFERENCES ${fk.refTable}(${fk.refCol})`;
+            });
+            return `CREATE TABLE ${table.name} (\n  ${cols.join(",\n  ")} ${fks.join("")}\n);`;
         }).join("\n\n");
     }
 
-
+// `\n  FOREIGN KEY (${col.name}) REFERENCES ${fk.refTable}(${fk.refCol})`
     return (
         <div className="h-screen  overflow-hidden">
             <Editor

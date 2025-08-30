@@ -12,13 +12,14 @@ export const useStore = create(persist((set) => ({
                 borderColor: "#FF6B6B",
                 columns: [
                     {
-                        id: 1,
+                        id: Date.now(),
                         name: "id",
                         type: "bigint",
                         key: "primary",
                         nullable: false
                     }
                 ],
+                foreignKeys: [],
                 type: "custom",
                 position: { x: 400 + Math.floor(Math.random() * 300), y: 200 + Math.floor(Math.random() * 300) },
             }],
@@ -26,24 +27,57 @@ export const useStore = create(persist((set) => ({
         }
     ],
 
+    addForeignKey: (tableId, diagramId, tableName, ForeigncolName, refColName) => set((state) => ({
+        database: state.database.map((diagram) =>
+            diagram.id === diagramId ? {
+                ...diagram,
+                diagram_data: diagram.diagram_data.map((table) =>
+                    table.id === tableId ? {
+                        ...table,
+                        foreignKeys: [...table.foreignKeys, {
+                            refTable : tableName,
+                            foreignCol : ForeigncolName,
+                            refCol: refColName
+                        }]
+                    } : table
+                )
+            } : diagram
+        )
+    })),
+
+    updateForeignKey: (tableId, diagramId, refColName, ForeigncolName) => set((state) => ({
+        database: state.database.map((diagram) =>
+            diagram.id === diagramId ? {
+                ...diagram,
+                diagram_data: diagram.diagram_data.map((table) =>
+                    table.id === tableId ? {
+                        ...table,
+                        foreignKeys : table.foreignKeys.filter((item) => !(item.refCol === refColName && item.foreignCol === ForeigncolName))
+                    } : table
+                )
+            } : diagram
+        )
+    })),
+
     createDiagram: (diagramName) => set((state) => ({
         database: [...state.database, {
 
             id: Date.now(),
-            diagram_name: diagramName || "Diagram_"+state.database.length,
+            diagram_name: diagramName || "Diagram_" + state.database.length,
             diagram_data: [{
                 id: crypto.randomUUID(),
                 name: "table_1",
                 borderColor: "#FF6B6B",
                 columns: [
                     {
-                        id: 1,
+                        id: Date.now(),
                         name: "id",
                         type: "bigint",
                         key: "primary",
                         nullable: false
                     }
                 ],
+                foreignKeys: [],
                 type: "custom",
                 position: { x: 400 + Math.floor(Math.random() * 300), y: 200 + Math.floor(Math.random() * 300) },
             }],
@@ -95,6 +129,8 @@ export const useStore = create(persist((set) => ({
                 : diagram
         )
     })),
+
+
 
     changeTableName: (tableId, name, diagramId) => set((state) => ({
         database: state.database.map((diagram) =>

@@ -8,6 +8,7 @@ function Collapsible({ id, borderColor, name, diagramId }) {
 
   const [isOpen, setIsOpen] = useState(false);
   const [openKeyMenu, setOpenKeyMenu] = useState(null);
+  const [nullable, setNullable] = useState(false);
 
   const columns = GetColumns(diagramId, id)  
   
@@ -32,7 +33,7 @@ function Collapsible({ id, borderColor, name, diagramId }) {
 
 
   const addColumn = () => {
-    addC(id, { id: crypto.randomUUID(), name: "new_column", type: "bigint", isPrimary: false, nullable: false }, diagramId);
+    addC(id, { id: Date.now(), name: "new_column", type: "bigint", isPrimary: false, nullable: false }, diagramId);
   };
 
   const setColoumnKey = (colId, key) => {
@@ -128,7 +129,7 @@ function Collapsible({ id, borderColor, name, diagramId }) {
 
                   <span
                     className={`hover:bg-neutral-200 dark:hover:bg-neutral-700 cursor-pointer rounded px-2 h-full flex items-center justify-center font-semibold ${col.nullable ? "text-red-500" : "text-neutral-600 dark:text-neutral-300"}`}
-                    onClick={() => setNull(id, col.id, nullable,diagramId)}
+                    onClick={() => {setNullable(!nullable); setNull(id, col.id, !col.nullable, diagramId)}}
                   >
                     N
                   </span>

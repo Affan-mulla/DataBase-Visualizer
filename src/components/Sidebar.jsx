@@ -22,13 +22,14 @@ const Sidebar = ({diagramId}) => {
             borderColor: randomColor,
             columns: [
                 {
-                    id: 1,
+                    id: Date.now(),
                     name: "id",
                     type: "BIGINT",
-                    isPrimary: true,
+                    key : "primary",
                     nullable: false
                 }
             ],
+            foreignKeys : [],
             type: 'custom',
             position: { x: 300 + Math.floor(Math.random() * 900), y: Math.floor(Math.random() * 500) }
         }, diagramId);
