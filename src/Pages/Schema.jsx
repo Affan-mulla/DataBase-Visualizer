@@ -19,7 +19,7 @@ const Schema = () => {
                 let def = `${col.name} ${col.type}`;
                 if (col.key) def += col.key === "primary" ? " PRIMARY KEY" : " UNIQUE";
                 console.log(table.foreignKeys);
-                if (col.nullable) def += " NOT NULL";
+                if (!col.nullable) def += " NOT NULL";
                 return def;
             });
             const fks = table.foreignKeys.map(fk => {
