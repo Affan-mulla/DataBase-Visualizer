@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Key, Trash, ArrowDown, ArrowUp, Star, CircleDot, Snowflake, LogIn } from "lucide-react";
+import { Key, Trash, ArrowDown, ArrowUp, Star, CircleDot, Snowflake, LogIn, X } from "lucide-react";
 import { useStore } from "../store/store";
 import { dbDataTypes } from "../data/dataTypes";
 import GetColumns from "../hooks/GetColumns";
@@ -112,7 +112,11 @@ function Collapsible({ id, borderColor, name, diagramId }) {
                     </button>
 
                     {openKeyMenu === col.id && (
-                      <div className="absolute right-0 top-full w-40 bg-neutral-900 text-white shadow shadow-neutral-900 rounded p-2">
+                      <div className="absolute right-0 top-full w-40 bg-neutral-900 text-white shadow shadow-neutral-900 rounded p-2 z-50">
+                        <div className="flex items-center justify-between mb-1">
+                          <p className="font-semibold text-sm text-neutral-300">Select Key</p>
+                          <button className=" hover:text-red-500 hover:bg-neutral-700 p-1 rounded duration-200" onClick={() => toggleKeyMenu(null)}><X size={16} /></button>
+                        </div>
                         {options.map((option, index) => (
                           <button
                             key={index}
