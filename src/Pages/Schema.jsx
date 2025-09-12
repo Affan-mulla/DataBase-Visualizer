@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useStore } from '../store/store'
 import { Editor } from '@monaco-editor/react'
+import { Copy } from 'lucide-react'
 
 const Schema = () => {
     const id = useParams().id
@@ -29,7 +30,6 @@ const Schema = () => {
         }).join("\n\n");
     }
 
-// `\n  FOREIGN KEY (${col.name}) REFERENCES ${fk.refTable}(${fk.refCol})`
     return (
         <div className="h-screen  overflow-hidden">
             <Editor
@@ -43,6 +43,9 @@ const Schema = () => {
                     wordWrap: "on"
                 }}
             />
+            <button className='absolute top-4 right-8 py-2 px-4 rounded bg-blue-500 text-white' onClick={() => navigator.clipboard.writeText(schema)}>
+                <Copy/>
+            </button>
         </div>
     )
 }
