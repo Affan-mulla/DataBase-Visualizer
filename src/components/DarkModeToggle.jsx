@@ -1,4 +1,4 @@
-import { Moon } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 import React from 'react'
 
 const DarkModeToggle = () => {
@@ -11,7 +11,13 @@ const DarkModeToggle = () => {
   return (
     
         <button onClick={toggleDarkMode} className='p-2 cursor-pointer '>
-            <Moon className='w-6 h-6 text-indigo-500' />
+            {
+                isDarkMode ? (
+                    <Moon className='w-6 h-6 text-indigo-500' />
+                ) : (
+                    <Sun className='w-6 h-6 text-amber-400' />
+                )
+            }
         </button>
 
   )
