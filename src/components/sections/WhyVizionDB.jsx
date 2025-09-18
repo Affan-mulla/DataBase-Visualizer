@@ -35,7 +35,7 @@ const benefits = [
 
 const WhyVizionDB = () => {
   return (
-    <section className="py-24 px-6 bg-white dark:bg-black text-black dark:text-white transition-colors">
+    <section className="py-24 px-6 bg-neutral-50 dark:bg-neutral-950 text-black dark:text-white transition-colors">
       <div className="container mx-auto">
         {/* Heading */}
         <div className="text-center mb-16">

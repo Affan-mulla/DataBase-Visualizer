@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-white dark:bg-black text-black dark:text-white transition-colors">
-      {/* Background subtle grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,#0000000A_1px,transparent_0)] dark:bg-[radial-gradient(circle_at_1px_1px,#ffffff10_1px,transparent_0)] [background-size:40px_40px]" />
+    <section className="relative min-h-screen flex items-center justify-center dark:bg-transparent text-black dark:text-white transition-colors">
 
       <div className="container mx-auto px-6 text-center relative z-10">
         {/* Badge */}

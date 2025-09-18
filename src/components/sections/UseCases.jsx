@@ -29,7 +29,7 @@ const useCases = [
 
 const UseCases = () => {
   return (
-    <section className="py-24 px-6 bg-white dark:bg-black transition-colors duration-300">
+    <section className="py-24 px-6 bg-neutral-50 dark:bg-neutral-950 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-16">
