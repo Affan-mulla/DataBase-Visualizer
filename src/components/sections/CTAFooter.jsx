@@ -1,4 +1,5 @@
 import { ArrowRight, Github, Twitter, Book } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const CTAFooter = () => {
   return (
@@ -24,14 +25,11 @@ const CTAFooter = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-            <button className="inline-flex items-center px-6 py-3 rounded-xl bg-[#4D96FF] dark:bg-white text-white dark:text-black font-semibold hover:bg-[#6BCB77] dark:hover:bg-gray-200 transition shadow-md">
+            <Link to={"/diagram"} className="inline-flex items-center px-6 py-3 rounded-xl bg-[#4d97ff] dark:bg-white text-white dark:text-black font-semibold hover:bg-[#6BCB77] dark:hover:bg-gray-100 transition shadow-[0_0_100px_#ffffff30] hover:shadow-[0_0_55px_#4d97ff30]  hover:scale-110 duration-300 ease-in-out">
               Start Building Now
               <ArrowRight className="ml-2 h-5 w-5" />
-            </button>
-            <button className="inline-flex items-center px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-700 hover:border-[#4D96FF] dark:hover:border-white text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition">
-              <Book className="mr-2 h-4 w-4" />
-              Read Documentation
-            </button>
+            </Link>
+            
           </div>
 
           {/* Trust indicators */}
