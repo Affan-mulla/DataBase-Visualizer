@@ -9,7 +9,7 @@ const Hero = () => {
         {/* Badge */}
         <div className="inline-flex items-center rounded-full border border-[#4D96FF]/30 dark:border-white/20 bg-[#4D96FF]/10 dark:bg-white/10 px-4 py-1.5 text-sm text-[#4D96FF] dark:text-white mb-8 [@keyframes_borderMove:{from:{'}}]">
           <span className="mr-2">🚀</span>
-          New: 50% faster queries in v2.0
+          No Login Required
         </div>
 
         {/* Headline */}

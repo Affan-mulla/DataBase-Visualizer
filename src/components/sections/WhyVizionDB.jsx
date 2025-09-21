@@ -1,35 +1,35 @@
-import { Zap, Shield, DollarSign, Wrench, Clock, TrendingUp } from "lucide-react";
+import { Zap, UserX, DollarSign, Wrench, Clock, Rocket } from "lucide-react";
 
 const benefits = [
   {
-    icon: Zap,
-    title: "Lightning Fast",
-    description: "Optimized for performance with sub-millisecond query times.",
+    icon: UserX,
+    title: "No Login Needed",
+    description: "Start instantly. No sign-ups, no credentials, no friction.",
   },
   {
-    icon: Shield,
-    title: "Secure by Default",
-    description: "Built-in encryption, authentication, and access controls.",
+    icon: Zap,
+    title: "Blazing Fast",
+    description: "Simple queries that return results in milliseconds.",
   },
   {
     icon: DollarSign,
-    title: "Cost Effective",
-    description: "Pay only for what you use. No hidden fees or surprise bills.",
+    title: "Completely Free",
+    description: "Zero cost. Perfect for students, hobby projects, and indie devs.",
   },
   {
     icon: Wrench,
-    title: "Developer First",
-    description: "Intuitive APIs, great docs, and tools developers actually want to use.",
+    title: "Less Complexity",
+    description: "Easy to use. No need for complex setup or configuration.",
   },
   {
     icon: Clock,
-    title: "Zero Maintenance",
-    description: "Automatic backups, updates, and scaling. Focus on building.",
+    title: "Focus on Building",
+    description: "Forget about database headaches. Just code and ship.",
   },
   {
-    icon: TrendingUp,
-    title: "Scales With You",
-    description: "From prototype to production, VizionDB grows with your success.",
+    icon: Rocket,
+    title: "Perfect for Prototypes",
+    description: "From quick ideas to side projects, get moving without overhead.",
   },
 ];
 
@@ -44,7 +44,8 @@ const WhyVizionDB = () => {
             <span className="text-[#4D96FF] dark:text-white">VizionDB</span>?
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            We've eliminated the pain points that slow down development, so you can ship faster and build better.
+            A lightweight, no-login database designed for speed, simplicity, and
+            hassle-free development.
           </p>
         </div>
 
@@ -75,27 +76,27 @@ const WhyVizionDB = () => {
         <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
           <div className="text-center">
             <div className="text-3xl md:text-4xl font-bold text-[#4D96FF] dark:text-white mb-2">
-              99.9%
+              0
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Uptime SLA</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Logins Required</div>
           </div>
           <div className="text-center">
             <div className="text-3xl md:text-4xl font-bold text-[#4D96FF] dark:text-white mb-2">
-              &lt;5ms
+              &lt;10ms
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">Avg Query Time</div>
           </div>
           <div className="text-center">
             <div className="text-3xl md:text-4xl font-bold text-[#4D96FF] dark:text-white mb-2">
-              2.5k+
+              100%
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Happy Developers</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Free Forever</div>
           </div>
           <div className="text-center">
             <div className="text-3xl md:text-4xl font-bold text-[#4D96FF] dark:text-white mb-2">
-              24/7
+              1
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Expert Support</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Minute Setup</div>
           </div>
         </div>
       </div>
