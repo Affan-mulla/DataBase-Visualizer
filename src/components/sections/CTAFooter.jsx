@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const CTAFooter = () => {
   return (
-    <section className="py-24 px-6 bg-neutral-50 dark:bg-neutral-950 text-black dark:text-white transition-colors relative overflow-hidden">
+    <section className="pt-24 pb-10 px-6 bg-neutral-50 dark:bg-neutral-950 text-black dark:text-white transition-colors relative overflow-hidden">
       {/* Background subtle pattern for light mode */}
      
       <div className="container mx-auto text-center relative z-10">

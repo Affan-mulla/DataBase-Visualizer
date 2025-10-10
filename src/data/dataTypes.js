@@ -1,39 +1,36 @@
 export const dbDataTypes = [
+  // Numeric
   "INT",
   "INTEGER",
   "SMALLINT",
   "BIGINT",
-  "TINYINT",
   "DECIMAL",
   "NUMERIC",
   "FLOAT",
-  "DOUBLE",
   "REAL",
-  "SERIAL",
-  "DATE",
-  "TIME",
-  "TIMESTAMP",
-  "DATETIME",
-  "YEAR",
-  "INTERVAL",
+  "DOUBLE PRECISION",
+
+  // String
   "CHAR",
   "VARCHAR",
   "TEXT",
-  "TINYTEXT",
-  "MEDIUMTEXT",
-  "LONGTEXT",
-  "NCHAR",
   "NVARCHAR",
-  "BINARY",
-  "VARBINARY",
-  "BLOB",
-  "TINYBLOB",
-  "MEDIUMBLOB",
-  "LONGBLOB",
+
+  // Date & Time
+  "DATE",
+  "TIME",
+  "DATETIME",
+  "TIMESTAMP",
+  "YEAR",
+
+  // Boolean
   "BOOLEAN",
   "BOOL",
+
+  // Binary / Misc
+  "BLOB",
+  "VARBINARY",
   "JSON",
-  "XML",
-  "ENUM",
-  "SET"
+  "UUID",
+  "ENUM"
 ];

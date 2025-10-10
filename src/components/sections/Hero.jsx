@@ -1,5 +1,6 @@
 import { ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
@@ -15,7 +16,7 @@ const Hero = () => {
         {/* Headline */}
         <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
           The Tool Built for{" "}
-          <span className="bg-gradient-to-r from-[#4D96FF] to-[#4D96FF]/70 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[#4D96FF] to-[#4D96FF]/90 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
             Builders
           </span>
         </h1>
@@ -32,7 +33,6 @@ const Hero = () => {
             Get Started Free
             <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
-        
         </div>
 
         {/* Social proof */}

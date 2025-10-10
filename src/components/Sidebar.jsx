@@ -1,6 +1,7 @@
 import Collapsible from './Collapsible'
 import { useStore } from '../store/store';
 import { useParams } from 'react-router-dom';
+import { Plus, PlusCircle } from 'lucide-react';
 
 
 const Sidebar = ({diagramId}) => {
@@ -40,14 +41,15 @@ const Sidebar = ({diagramId}) => {
 
     return (
 
-        <div className="w-[350px] h-screen max-h-screen flex flex-col shadow-xl overflow-hidden bg-white dark:bg-slate-800">
-            <div className="flex justify-between items-center p-4 border-b border-neutral-200 shadow-sm sticky top-0 bg-white  dark:bg-slate-800 z-50">
+        <div className="w-[350px] h-screen max-h-screen flex flex-col shadow-xl overflow-hidden bg-neutral-100 dark:bg-neutral-900">
+            <div className="flex justify-between items-center p-4 border-b dark:border-neutral-800 shadow dark:shadow-neutral-700 sticky top-0 bg-white  dark:bg-neutral-800 z-50">
                 <h1 className="text-2xl font-semibold text-neutral-700 dark:text-white">Tables</h1>
                 <button
                     onClick={addNewTable}
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-[7px] rounded transition-colors"
+                    className="bg-blue-600 hover:bg-blue-500 text-white cursor-pointer  hover:scale-95 transition  flex items-center font-semibold px-4 py-[7px] rounded shadow duration-300"
                 >
-                    + New table
+                    <PlusCircle className=" mr-2 font-bold" size={20}  />
+                    New table
                 </button>
             </div>
 
