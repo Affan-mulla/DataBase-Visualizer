@@ -73,18 +73,12 @@ const WhyVizionDB = () => {
         </div>
 
         {/* Stats */}
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+        <div className="mt-20 grid grid-cols-2 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
           <div className="text-center">
             <div className="text-3xl md:text-4xl font-bold text-[#4D96FF] dark:text-white mb-2">
               0
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">Logins Required</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-[#4D96FF] dark:text-white mb-2">
-              &lt;10ms
-            </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Avg Query Time</div>
           </div>
           <div className="text-center">
             <div className="text-3xl md:text-4xl font-bold text-[#4D96FF] dark:text-white mb-2">
