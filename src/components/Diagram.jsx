@@ -1,6 +1,4 @@
-
 import { Trash2 } from 'lucide-react'
-import React from 'react'
 import { useStore } from '../store/store'
 import { Link } from 'react-router-dom';
 

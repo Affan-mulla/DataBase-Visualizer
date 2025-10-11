@@ -1,7 +1,5 @@
 import { ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center dark:bg-transparent text-black dark:text-white transition-colors">

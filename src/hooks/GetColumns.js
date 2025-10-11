@@ -1,6 +1,5 @@
-import React from 'react'
 import { useStore } from '../store/store'
-import { memo } from 'react'
+
 
 const GetColumns = (diagramId,tableId) => {
   const database = useStore((state) => state.database)

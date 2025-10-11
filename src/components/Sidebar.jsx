@@ -1,7 +1,6 @@
 import Collapsible from './Collapsible'
 import { useStore } from '../store/store';
-import { useParams } from 'react-router-dom';
-import { Plus, PlusCircle } from 'lucide-react';
+import {  PlusCircle } from 'lucide-react';
 
 
 const Sidebar = ({diagramId}) => {

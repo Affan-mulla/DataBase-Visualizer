@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Key, Trash, ArrowDown, ArrowUp, Star, CircleDot, Snowflake, LogIn, X } from "lucide-react";
+import { Key, Trash, ArrowDown, ArrowUp, CircleDot, Snowflake, X } from "lucide-react";
 import { useStore } from "../store/store";
 import { dbDataTypes } from "../data/dataTypes";
 import GetColumns from "../hooks/GetColumns";

@@ -1,4 +1,3 @@
-import React, { memo } from 'react'
 import { useStore } from '../store/store'
 
 const GetDiagram = (diagramId) => {

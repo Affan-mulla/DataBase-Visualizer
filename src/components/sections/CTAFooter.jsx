@@ -1,4 +1,4 @@
-import { ArrowRight, Github, Twitter, Book, Linkedin } from "lucide-react";
+import { ArrowRight, Github, Twitter, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const CTAFooter = () => {

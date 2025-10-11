@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useStore } from '../store/store'
 import { Editor } from '@monaco-editor/react'
-import { ArrowBigLeft, ArrowLeft, Copy } from 'lucide-react'
+import { ArrowLeft, Copy } from 'lucide-react'
 import { AnimatePresence, motion } from "framer-motion"
 const Schema = () => {
     const id = useParams().id
