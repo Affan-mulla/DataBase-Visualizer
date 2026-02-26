@@ -8,6 +8,11 @@ import { motion } from "framer-motion";
 
 function Collapsible({ id, borderColor, name, diagramId }) {
 
+  console.log(id);
+
+  promise.log()l;
+
+  random bullshit;;
   const [isOpen, setIsOpen] = useState(false);
   const [openKeyMenu, setOpenKeyMenu] = useState(null);
   const [nullable, setNullable] = useState(false);
